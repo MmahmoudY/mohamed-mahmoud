@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mohamed Mahmoud — AI & Data</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F7F5F0;
+    --ink: #1A1916;
+    --muted: #8A8780;
+    --accent: #C8623A;
+    --line: #E0DDD8;
+    --card: #EDEAE4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 60px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    animation: fadeDown 0.6s ease forwards;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── SECTIONS ── */
+  section { padding: 120px 60px; max-width: 960px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 100px;
+    max-width: 100%; margin: 0; padding-left: 60px; padding-right: 60px;
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 1.0; letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    max-width: 520px; color: var(--muted); font-size: 14px; line-height: 1.8;
+    opacity: 0; animation: fadeUp 0.7s 0.5s ease forwards;
+    margin-bottom: 48px;
+  }
+  .hero-links {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.65s ease forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border: 1px solid var(--ink);
+    text-decoration: none; color: var(--ink);
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn.filled { background: var(--ink); color: var(--bg); }
+  .btn.filled:hover { background: var(--accent); border-color: var(--accent); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 60px;
+    font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.6s 1s ease forwards;
+  }
+  .hero-scroll::before {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--muted);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 40px; height: 2px; background: var(--accent);
+    margin-bottom: 60px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 52px); line-height: 1.1;
+    margin-bottom: 48px; letter-spacing: -0.02em;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 20px; }
+  .about-text p strong { color: var(--ink); font-weight: 500; }
+  .about-stats { display: flex; flex-direction: column; gap: 1px; }
+  .stat-item {
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .stat-item:first-child { border-top: 1px solid var(--line); }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px; color: var(--ink);
+  }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px;
+    border: 1px solid var(--line); background: var(--line);
+  }
+  .skill-card {
+    background: var(--bg); padding: 32px;
+    transition: background 0.2s;
+  }
+  .skill-card:hover { background: var(--card); }
+  .skill-icon { font-size: 22px; margin-bottom: 14px; }
+  .skill-title { font-size: 13px; font-weight: 500; margin-bottom: 10px; letter-spacing: 0.04em; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    padding: 3px 10px; background: var(--card);
+    font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+    border: 1px solid var(--line);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-list { display: flex; flex-direction: column; gap: 1px; }
+  .project-item {
+    border: 1px solid var(--line);
+    padding: 36px 40px;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: start; gap: 20px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .project-item:hover { background: var(--card); }
+  .project-num {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: 13px; color: var(--accent); margin-bottom: 10px;
+  }
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; margin-bottom: 10px; line-height: 1.2;
+  }
+  .project-desc { font-size: 13px; color: var(--muted); max-width: 500px; line-height: 1.7; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .project-arrow {
+    font-size: 20px; color: var(--muted); align-self: center;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .project-item:hover .project-arrow { transform: translate(4px, -4px); color: var(--accent); }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-text p { color: var(--muted); line-height: 1.9; margin-bottom: 32px; }
+  .contact-links { display: flex; flex-direction: column; gap: 1px; }
+  .contact-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0; border-bottom: 1px solid var(--line);
+    text-decoration: none; color: var(--ink);
+    font-size: 13px; letter-spacing: 0.04em;
+    transition: padding-left 0.2s;
+  }
+  .contact-link:first-child { border-top: 1px solid var(--line); }
+  .contact-link:hover { padding-left: 8px; color: var(--accent); }
+  .contact-link span { color: var(--muted); font-size: 11px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 20px; }
+    section, #hero { padding: 80px 24px; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .project-item { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">M. Mahmoud</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="position:relative;">
+  <p class="hero-tag">AI &amp; Data — Open to Internships</p>
+  <h1 class="hero-name">Mohamed<br/><em>Mahmoud</em></h1>
+  <p class="hero-desc">
+    IT student building intelligent systems — from transformer-based NLP models to embedded hardware.
+    Currently interning as an ML Engineer under the Microsoft DEPI program.
+  </p>
+  <div class="hero-links">
+    <a class="btn filled" href="#projects">View Projects</a>
+    <a class="btn" href="https://github.com/MmahmoudY" target="_blank">GitHub ↗</a>
+    <a class="btn" href="https://www.linkedin.com/in/mohamed-mahmoud-413178352" target="_blank">LinkedIn ↗</a>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">01 — About</p>
+  <h2 class="section-title reveal">Driven by data,<br/>built on curiosity.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I'm a final-year <strong>Information Technology</strong> student at Egyptian E-Learning University,
+        specialising in AI and machine learning. I enjoy translating complex problems into
+        clean, working code — whether that's a neural network or a hardware sensor.
+      </p>
+      <p>
+        I'm currently an <strong>ML Engineer Intern</strong> with the Microsoft-backed DEPI program,
+        where I work on real-world AI pipelines. I hold certifications in AI from both
+        Pearson Certiport and the National Telecommunication Institute.
+      </p>
+      <p>
+        I'm actively looking for an <strong>AI, Data Science, or Machine Learning internship</strong>
+        where I can keep growing and contribute meaningfully.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-item">
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Certifications</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div>
+          <div class="stat-num">2026</div>
+          <div class="stat-label">Expected Graduation</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div>
+          <div class="stat-num">2.98</div>
+          <div class="stat-label">GPA / 4.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">02 — Skills</p>
+  <h2 class="section-title reveal">Tools &amp; Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">AI & Machine Learning</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Transformers</span>
+        <span class="tag">NLP</span>
+        <span class="tag">Neural Networks</span>
+        <span class="tag">Model Training</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📊</div>
+      <div class="skill-title">Data Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Data Preprocessing</span>
+        <span class="tag">Feature Engineering</span>
+        <span class="tag">Data Analysis</span>
+        <span class="tag">ML Pipelines</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💻</div>
+      <div class="skill-title">Software Development</div>
+      <div class="skill-tags">
+        <span class="tag">Java</span>
+        <span class="tag">OOP</span>
+        <span class="tag">Data Structures</span>
+        <span class="tag">Algorithms</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔌</div>
+      <div class="skill-title">Embedded Systems</div>
+      <div class="skill-tags">
+        <span class="tag">Raspberry Pi</span>
+        <span class="tag">Ultrasonic Sensors</span>
+        <span class="tag">GPS Modules</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-title">Web & Tools</div>
+      <div class="skill-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">Web Design</span>
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎓</div>
+      <div class="skill-title">Certifications</div>
+      <div class="skill-tags">
+        <span class="tag">IT Specialist – AI</span>
+        <span class="tag">NTI AI (80h)</span>
+        <span class="tag">NTI Web (120h)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">03 — Projects</p>
+  <h2 class="section-title reveal">Selected Work</h2>
+  <div class="projects-list">
+
+    <div class="project-item reveal">
+      <div>
+        <div class="project-num">01</div>
+        <div class="project-name">Neural Machine Translation</div>
+        <div class="project-desc">
+          End-to-end sequence-to-sequence translation model built from scratch using transformer architecture
+          and self-attention mechanisms. Covers full pipeline: dataset preparation, training, and BLEU score evaluation.
+        </div>
+        <div class="project-stack">
+          <span class="tag">Python</span>
+          <span class="tag">Transformers</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Attention Mechanism</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+
+    <div class="project-item reveal">
+      <div>
+        <div class="project-num">02</div>
+        <div class="project-name">Hospital Management System</div>
+        <div class="project-desc">
+          Java-based application to manage patient records, appointments, and staff data. 
+          Designed with OOP principles and efficient data structures to handle large structured datasets.
+        </div>
+        <div class="project-stack">
+          <span class="tag">Java</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Data Structures</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+
+    <div class="project-item reveal">
+      <div>
+        <div class="project-num">03</div>
+        <div class="project-name">Snake Game</div>
+        <div class="project-desc">
+          Classic Snake game built entirely in Python with object-oriented design,
+          event-driven logic, and real-time state management — demonstrating clean code practices
+          and algorithmic thinking.
+        </div>
+        <div class="project-stack">
+          <span class="tag">Python</span>
+          <span class="tag">OOP</span>
+          <span class="tag">Game Logic</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">04 — Contact</p>
+  <h2 class="section-title reveal">Let's work together.</h2>
+  <div class="contact-inner">
+    <div class="contact-text reveal">
+      <p>
+        I'm actively looking for an internship in AI, machine learning, or data science.
+        If you have an opportunity or just want to connect — reach out.
+      </p>
+      <a class="btn filled" href="mailto:moomahmoud392@gmail.com">Send an Email</a>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="mailto:moomahmoud392@gmail.com">
+        moomahmoud392@gmail.com <span>Email ↗</span>
+      </a>
+      <a class="contact-link" href="tel:+201095420960">
+        +20 109 542 0960 <span>Phone ↗</span>
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/mohamed-mahmoud-413178352" target="_blank">
+        linkedin.com/in/mohamed-mahmoud <span>LinkedIn ↗</span>
+      </a>
+      <a class="contact-link" href="https://github.com/MmahmoudY" target="_blank">
+        github.com/MmahmoudY <span>GitHub ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Mohamed Mahmoud Youssef</span>
+  <span>AI & Data Intern · Cairo, Egypt</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
